@@ -907,8 +907,8 @@ class HttpProtocol(MessageProtocol):
             if exc is None:
                 exc = HttpError('parse error: {}'.format(msg))
             if self._message:
-                self._message.body.feed_error(self._error)
-            self._queue.put_nowait(self._error)
+                self._message.body.feed_error(exc)
+            self._queue.put_nowait(exc)
         super(HttpProtocol, self).connection_lost(exc)
         if not self._server_side:
             self._queue.put_nowait(self._error)
