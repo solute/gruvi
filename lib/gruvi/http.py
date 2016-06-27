@@ -72,11 +72,10 @@ __all__ = ['HttpError', 'HttpRequest', 'HttpResponse', 'HttpProtocol',
 
 
 # Export some definitions from  http.client.
-for name in dir(http_client):
-    value = getattr(http_client, name)
-    if not name.isupper() or not isinstance(value, int):
-        continue
-    if value in http_client.responses:
+for name in http_client.responses.values():
+    name = '_'.join(name.split()).replace("-", "_").upper()
+    value = getattr(http_client, name, None)
+    if value:
         globals()[name] = value
 
 HTTP_PORT = http_client.HTTP_PORT
