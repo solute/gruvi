@@ -1034,6 +1034,7 @@ class HttpProtocol(MessageProtocol):
         if self._header_value:
             self._save_header()
         self._message.body.buffer.feed_eof()
+        self._message = None
         self._maybe_pause_transport()
         return 0
 
